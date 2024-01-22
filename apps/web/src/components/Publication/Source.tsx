@@ -1,0 +1,32 @@
+import type { FC } from 'react';
+
+import { apps } from '@hey/data/apps';
+import { STATIC_IMAGES_URL } from '@hey/data/constants';
+import getAppName from '@hey/lib/getAppName';
+import { Tooltip } from '@hey/ui';
+
+interface SourceProps {
+  publishedOn: string;
+}
+
+const Source: FC<SourceProps> = ({ publishedOn }) => {
+  const show = apps.includes(publishedOn);
+
+  if (!show) {
+    return null;
+  }
+
+  const appName = getAppName(publishedOn);
+
+  return (
+    <Tooltip content={appName} placement="top">
+      <img
+        alt={appName}
+        className="w-4"
+        src={`${STATIC_IMAGES_URL}/source/${publishedOn}.jpeg`}
+      />
+    </Tooltip>
+  );
+};
+
+export default Source;
