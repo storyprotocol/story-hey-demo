@@ -22,5 +22,6 @@ export const AlgorithmProvider = {
 };
 
 export enum OpenAction {
+  IntellectualProperty = 'Intellectual Property',
   Tip = 'Tip'
 }

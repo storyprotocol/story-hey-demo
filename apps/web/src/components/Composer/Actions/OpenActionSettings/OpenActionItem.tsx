@@ -33,7 +33,7 @@ const OpenActionItem: FC<OpenActionItemProps> = ({
 
   return (
     <Card
-      className="flex cursor-pointer items-center justify-between px-5 py-3"
+      className="mb-3 flex cursor-pointer items-center justify-between px-5 py-3"
       forceRounded
       onClick={() => onOpenActionSelected(type)}
     >

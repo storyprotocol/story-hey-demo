@@ -18,22 +18,38 @@ const OpenActionsList: FC = () => {
     (state) => state.selectedOpenAction
   );
 
-  return screen === ScreenType.List ? (
-    <div className="p-5">
-      <OpenActionItem
-        description="Add ability to tip"
-        icon={<TipIcon className="size-6" />}
-        title="Tipping"
-        type={OpenAction.Tip}
-      />
-      <SaveOrCancel
-        onSave={() => setShowModal(false)}
-        saveDisabled={selectedOpenAction === null}
-      />
+  return (
+    <div>
+      {screen === ScreenType.List ? (
+        <div className="p-5">
+          <OpenActionItem
+            description="Add ability to tip"
+            icon={<TipIcon className="size-6" />}
+            title="Tipping"
+            type={OpenAction.Tip}
+          />
+          <OpenActionItem
+            description="Define your intellectual property terms"
+            icon={
+              <img
+                alt="Intellectual Property"
+                className="mx-0.5 size-5"
+                src="/assets/open-action/copyright.svg"
+              />
+            }
+            title="Intellectual Property"
+            type={OpenAction.IntellectualProperty}
+          />
+          <SaveOrCancel
+            onSave={() => setShowModal(false)}
+            saveDisabled={selectedOpenAction === null}
+          />
+        </div>
+      ) : selectedOpenAction ? (
+        <OpenActionsConfig />
+      ) : null}
     </div>
-  ) : selectedOpenAction ? (
-    <OpenActionsConfig />
-  ) : null;
+  );
 };
 
 export default OpenActionsList;

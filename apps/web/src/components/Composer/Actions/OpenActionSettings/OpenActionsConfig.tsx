@@ -1,3 +1,4 @@
+import IntellectualPropertyConfig from '@components/Composer/Actions/OpenActionSettings/Config/IntellectualProperty';
 import { OpenAction } from '@hey/data/enums';
 import { type FC } from 'react';
 import { useOpenActionStore } from 'src/store/non-persisted/publication/useOpenActionStore';
@@ -9,7 +10,16 @@ const OpenActionsConfig: FC = () => {
     (state) => state.selectedOpenAction
   );
 
-  return <div>{selectedOpenAction === OpenAction.Tip && <TipConfig />}</div>;
+  return (
+    <div>
+      <div>{selectedOpenAction === OpenAction.Tip && <TipConfig />}</div>
+      <div>
+        {selectedOpenAction === OpenAction.IntellectualProperty && (
+          <IntellectualPropertyConfig />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default OpenActionsConfig;
