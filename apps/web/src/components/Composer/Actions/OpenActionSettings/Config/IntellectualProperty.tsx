@@ -1,5 +1,3 @@
-import type { Address } from 'viem';
-
 import ToggleWithHelper from '@components/Shared/ToggleWithHelper';
 import { VerifiedOpenActionModules } from '@hey/data/verified-openaction-modules';
 import { Input, Radio } from '@hey/ui';
@@ -66,14 +64,35 @@ const IntellectualPropertyConfig: FC = () => {
   });
 
   const onSave = () => {
-    // todo
-    setOpenAction({
-      address: VerifiedOpenActionModules.IntellectualProperty,
-      data: encodeAbiParameters(
-        [{ name: 'tipReceiver', type: 'address' }],
-        [authorName as Address]
-      )
-    });
+    if (enabled) {
+      let licenseType = 'SocialRemix';
+      if (isCommercialActivity) {
+        licenseType = 'CommercialActivity';
+      }
+
+      let newPostName = postName;
+      if (newPostName == '') {
+        newPostName = 'an awesome post';
+      }
+
+      let newAuthorName = authorName;
+      if (newAuthorName == '') {
+        newAuthorName = 'stranger';
+      }
+
+      setOpenAction({
+        address: VerifiedOpenActionModules.IntellectualProperty,
+        data: encodeAbiParameters(
+          [
+            { name: 'postName', type: 'string' },
+            { name: 'authorName', type: 'string' },
+            { name: 'licenseType', type: 'string' }
+          ],
+          [newPostName, newAuthorName, licenseType]
+        )
+      });
+    }
+
     setShowModal(false);
   };
 
