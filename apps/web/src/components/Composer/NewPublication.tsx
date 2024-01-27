@@ -189,6 +189,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
 
   // Open action store
   const openAction = useOpenActionStore((state) => state.openAction);
+  const buildOpenAction = useOpenActionStore((state) => state.buildOpenAction);
   const resetOpenActionSettings = useOpenActionStore((state) => state.reset);
 
   // Reference module store
@@ -219,7 +220,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
   const hasVideo = attachments[0]?.type === 'Video';
 
   const noCollect = !collectModule.type;
-  const noOpenAction = !openAction;
+  const noOpenAction = !openAction && !buildOpenAction;
   // Use Momoka if the profile the comment or quote has momoka proof and also check collect module has been disabled
   const useMomoka = isComment
     ? publication.momoka?.proof
@@ -438,8 +439,16 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
         });
       }
 
-      if (openAction) {
-        openActionModules.push({ unknownOpenAction: openAction });
+      if (openAction || buildOpenAction) {
+        if (openAction) {
+          openActionModules.push({ unknownOpenAction: openAction });
+        } else if (buildOpenAction) {
+          openActionModules.push({
+            unknownOpenAction: buildOpenAction({
+              arweaveId
+            })
+          });
+        }
       }
 
       // Payload for the Momoka post/comment/quote

@@ -8,11 +8,21 @@ export enum ScreenType {
   List = 'LIST'
 }
 
+interface OpenActionBuildParams {
+  arweaveId: string;
+}
+
+type BuildOpenActionFunc = (
+  buildParams: OpenActionBuildParams
+) => UnknownOpenActionModuleInput;
+
 interface OpenActionState {
+  buildOpenAction?: BuildOpenActionFunc;
   openAction: null | UnknownOpenActionModuleInput;
   reset: () => void;
   screen: ScreenType;
   selectedOpenAction: null | OpenAction;
+  setBuildOpenAction: (buildOpenAction: BuildOpenActionFunc) => void;
   setOpenAction: (openAction: UnknownOpenActionModuleInput) => void;
   setScreen: (screen: ScreenType) => void;
   setSelectedOpenAction: (selectedOpenAction: OpenAction) => void;
@@ -21,6 +31,7 @@ interface OpenActionState {
 }
 
 export const useOpenActionStore = create<OpenActionState>((set) => ({
+  buildOpenAction: undefined,
   openAction: null,
   reset: () =>
     set({
@@ -30,6 +41,7 @@ export const useOpenActionStore = create<OpenActionState>((set) => ({
     }),
   screen: ScreenType.List,
   selectedOpenAction: null,
+  setBuildOpenAction: (buildOpenAction) => set({ buildOpenAction }),
   setOpenAction: (openAction) => set({ openAction }),
   setScreen: (screen) => set({ screen }),
   setSelectedOpenAction: (selectedOpenAction) => set({ selectedOpenAction }),

@@ -44,7 +44,9 @@ const useIntellectualPropertyActionStore =
 const IntellectualPropertyConfig: FC = () => {
   const openAction = useOpenActionStore((state) => state.openAction);
   const setShowModal = useOpenActionStore((state) => state.setShowModal);
-  const setOpenAction = useOpenActionStore((state) => state.setOpenAction);
+  const setBuildOpenAction = useOpenActionStore(
+    (state) => state.setBuildOpenAction
+  );
   const {
     authorName,
     enabled,
@@ -80,16 +82,19 @@ const IntellectualPropertyConfig: FC = () => {
         newAuthorName = 'stranger';
       }
 
-      setOpenAction({
-        address: VerifiedOpenActionModules.IntellectualProperty,
-        data: encodeAbiParameters(
-          [
-            { name: 'postName', type: 'string' },
-            { name: 'authorName', type: 'string' },
-            { name: 'licenseType', type: 'string' }
-          ],
-          [newPostName, newAuthorName, licenseType]
-        )
+      setBuildOpenAction((params) => {
+        return {
+          address: VerifiedOpenActionModules.IntellectualProperty,
+          data: encodeAbiParameters(
+            [
+              { name: 'arweaveId', type: 'string' },
+              { name: 'postName', type: 'string' },
+              { name: 'authorName', type: 'string' },
+              { name: 'licenseType', type: 'string' }
+            ],
+            [params.arweaveId, newPostName, newAuthorName, licenseType]
+          )
+        };
       });
     }
 
