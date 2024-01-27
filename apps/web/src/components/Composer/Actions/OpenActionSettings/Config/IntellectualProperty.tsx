@@ -87,12 +87,17 @@ const IntellectualPropertyConfig: FC = () => {
           address: VerifiedOpenActionModules.IntellectualProperty,
           data: encodeAbiParameters(
             [
-              { name: 'arweaveId', type: 'string' },
               { name: 'postName', type: 'string' },
               { name: 'authorName', type: 'string' },
-              { name: 'licenseType', type: 'string' }
+              { name: 'licenseType', type: 'string' },
+              { name: 'arweaveId', type: 'string' }
             ],
-            [params.arweaveId, newPostName, newAuthorName, licenseType]
+            [
+              newPostName,
+              newAuthorName,
+              licenseType,
+              'https://gateway.irys.xyz/' + params.arweaveId
+            ]
           )
         };
       });
