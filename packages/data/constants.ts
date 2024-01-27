@@ -73,7 +73,7 @@ export const ATTACHMENT = 'tr:w-500';
 
 // S3 bucket
 export const S3_BUCKET = {
-  HEY_MEDIA: 'hey-media'
+  HEY_MEDIA: 'hey-media-haodi'
 };
 
 // Stripe Plans

@@ -18,6 +18,7 @@ import Like from './Like';
 import Mod from './Mod';
 import ShareMenu from './Share';
 import Views from './Views';
+import IntellectualPropertyOpenAction from "@components/Publication/LensOpenActions/UnknownModule/IntellectualProperty";
 
 interface PublicationActionsProps {
   publication: AnyPublication;
@@ -53,6 +54,12 @@ const PublicationActions: FC<PublicationActionsProps> = ({
     (module) => module.contract.address === VerifiedOpenActionModules.Tip
   );
 
+  // Check if the publication has an intellectual property module
+  const canIntellectualProperty = targetPublication.openActionModules.some(
+    (module) =>
+      module.contract.address === VerifiedOpenActionModules.IntellectualProperty
+  );
+
   return (
     <span
       className="-ml-2 mt-2 flex flex-wrap items-center gap-x-6 gap-y-1 sm:gap-8"
@@ -68,6 +75,12 @@ const PublicationActions: FC<PublicationActionsProps> = ({
       ) : null}
       {canTip ? (
         <TipOpenAction
+          isFullPublication={showCount}
+          publication={publication}
+        />
+      ) : null}
+      {canIntellectualProperty ? (
+        <IntellectualPropertyOpenAction
           isFullPublication={showCount}
           publication={publication}
         />
