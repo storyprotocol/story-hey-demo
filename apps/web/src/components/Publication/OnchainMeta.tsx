@@ -3,13 +3,19 @@ import type { FC } from 'react';
 
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import {
+  ALCHEMY_MUMBAI_API,
   ARWEAVE_GATEWAY,
   IPFS_GATEWAY,
+  IS_MAINNET,
   POLYGONSCAN_URL
 } from '@hey/data/constants';
+import { VerifiedOpenActionModules } from '@hey/data/verified-openaction-modules';
 import { Card } from '@hey/ui';
 import Link from 'next/link';
+import { useState } from 'react';
 import urlcat from 'urlcat';
+import { createPublicClient, decodeEventLog, http, parseAbi } from 'viem';
+import { polygon, polygonMumbai } from 'viem/chains';
 
 interface MetaProps {
   hash: string;
@@ -39,13 +45,41 @@ interface OnchainMetaProps {
 }
 
 const OnchainMeta: FC<OnchainMetaProps> = ({ publication }) => {
+  const [storyProof, setStoryProof] = useState('LOADING');
+
   const hash = publication.metadata.rawURI?.split('/').pop();
   const isArweaveHash = hash?.length === 43;
   const isIPFSHash = hash?.length === 46 || hash?.length === 59;
+  const isIntellectualProperty = !!publication.openActionModules.find(
+    (module) =>
+      module.contract.address === VerifiedOpenActionModules.IntellectualProperty
+  );
 
-  if (!isArweaveHash && !isIPFSHash) {
+  if (!isArweaveHash && !isIPFSHash && !isIntellectualProperty) {
     return null;
   }
+
+  const client = createPublicClient({
+    chain: IS_MAINNET ? polygon : polygonMumbai,
+    transport: http(ALCHEMY_MUMBAI_API)
+  });
+
+  client
+    .getTransactionReceipt({ hash: publication.txHash })
+    .then((txReceipt) => {
+      for (const log of txReceipt.logs) {
+        try {
+          const targetLog = decodeEventLog({
+            abi: parseAbi(['event IPAssetMinted(address, uint256, uint256)']),
+            data: log.data,
+            eventName: 'IPAssetMinted',
+            topics: log.topics
+          });
+          setStoryProof(`${targetLog.args[0]}:${targetLog.args[1].toString()}`);
+          break;
+        } catch (error) {}
+      }
+    });
 
   return (
     <Card as="aside">
@@ -77,6 +111,15 @@ const OnchainMeta: FC<OnchainMetaProps> = ({ publication }) => {
           <Meta
             hash={publication.txHash}
             name="TRANSACTION"
+            uri={`${POLYGONSCAN_URL}/tx/${publication.txHash
+              ?.split('/')
+              .pop()}`}
+          />
+        ) : null}
+        {isIntellectualProperty ? (
+          <Meta
+            hash={storyProof}
+            name="STORY PROTOCOL PROOF"
             uri={`${POLYGONSCAN_URL}/tx/${publication.txHash
               ?.split('/')
               .pop()}`}

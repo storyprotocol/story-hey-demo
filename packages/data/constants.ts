@@ -85,3 +85,7 @@ export const Stripe = {
     ? 'price_1OGGizSDpi8e32ARC7Gh5ou5'
     : 'price_1OGGqhSDpi8e32AR5WawyjjM'
 };
+
+export const ALCHEMY_MUMBAI_API = IS_MAINNET
+  ? `https://polygon-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+  : `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;

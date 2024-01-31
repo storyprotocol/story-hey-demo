@@ -42,7 +42,7 @@ const useIntellectualPropertyActionStore =
   }));
 
 const IntellectualPropertyConfig: FC = () => {
-  const openAction = useOpenActionStore((state) => state.openAction);
+  const buildOpenAction = useOpenActionStore((state) => state.buildOpenAction);
   const setShowModal = useOpenActionStore((state) => state.setShowModal);
   const setBuildOpenAction = useOpenActionStore(
     (state) => state.setBuildOpenAction
@@ -60,7 +60,7 @@ const IntellectualPropertyConfig: FC = () => {
   } = useIntellectualPropertyActionStore();
 
   useEffectOnce(() => {
-    if (!openAction) {
+    if (!buildOpenAction) {
       reset();
     }
   });
