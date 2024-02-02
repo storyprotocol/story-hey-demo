@@ -30,6 +30,7 @@ import {
   useQuoteOnMomokaMutation
 } from '@hey/lens';
 import checkDispatcherPermissions from '@hey/lib/checkDispatcherPermissions';
+import getProfile from '@hey/lib/getProfile';
 import getSignature from '@hey/lib/getSignature';
 import { OptmisticPublicationType } from '@hey/types/enums';
 import { useRouter } from 'next/router';
@@ -154,6 +155,7 @@ const useCreatePublication = ({
           generateOptimisticPublication({ txId: broadcastOnchain.txId }),
           ...txnQueue
         ]);
+        push(getProfile(currentProfile).link);
       }
     }
   });
