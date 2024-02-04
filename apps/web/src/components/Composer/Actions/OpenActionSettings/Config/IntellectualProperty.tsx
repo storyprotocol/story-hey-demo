@@ -1,6 +1,7 @@
 import ToggleWithHelper from '@components/Shared/ToggleWithHelper';
 import { VerifiedOpenActionModules } from '@hey/data/verified-openaction-modules';
 import { Input, Radio } from '@hey/ui';
+import uploadToArweave from '@lib/uploadToArweave';
 import { type FC } from 'react';
 import { useOpenActionStore } from 'src/store/non-persisted/publication/useOpenActionStore';
 import { useEffectOnce } from 'usehooks-ts';
@@ -82,7 +83,11 @@ const IntellectualPropertyConfig: FC = () => {
         newAuthorName = 'stranger';
       }
 
-      setBuildOpenAction((params) => {
+      setBuildOpenAction(async (params) => {
+        const arweaveId = await uploadToArweave({
+          // todo
+        });
+
         return {
           address: VerifiedOpenActionModules.IntellectualProperty,
           data: encodeAbiParameters(
@@ -96,7 +101,7 @@ const IntellectualPropertyConfig: FC = () => {
               newPostName,
               newAuthorName,
               licenseType,
-              'https://gateway.irys.xyz/' + params.arweaveId
+              'https://gateway.irys.xyz/' + arweaveId
             ]
           )
         };

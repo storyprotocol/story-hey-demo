@@ -444,8 +444,11 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
           openActionModules.push({ unknownOpenAction: openAction });
         } else if (buildOpenAction) {
           openActionModules.push({
-            unknownOpenAction: buildOpenAction({
-              arweaveId
+            unknownOpenAction: await buildOpenAction({
+              arweaveId,
+              content: `${processedPublicationContent}`,
+              profileName: getProfile(currentProfile).slugWithPrefix,
+              title
             })
           });
         }

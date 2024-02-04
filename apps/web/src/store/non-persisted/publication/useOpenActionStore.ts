@@ -10,11 +10,14 @@ export enum ScreenType {
 
 interface OpenActionBuildParams {
   arweaveId: string;
+  content: string;
+  profileName: string;
+  title: string;
 }
 
 type BuildOpenActionFunc = (
   buildParams: OpenActionBuildParams
-) => UnknownOpenActionModuleInput;
+) => Promise<UnknownOpenActionModuleInput>;
 
 interface OpenActionState {
   buildOpenAction?: BuildOpenActionFunc;
