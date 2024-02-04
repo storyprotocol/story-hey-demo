@@ -1,4 +1,5 @@
 import ToggleWithHelper from '@components/Shared/ToggleWithHelper';
+import { IS_MAINNET } from '@hey/data/constants';
 import { VerifiedOpenActionModules } from '@hey/data/verified-openaction-modules';
 import { Input, Radio } from '@hey/ui';
 import uploadToArweave from '@lib/uploadToArweave';
@@ -84,8 +85,35 @@ const IntellectualPropertyConfig: FC = () => {
       }
 
       setBuildOpenAction(async (params) => {
+        let mediaUrl: string = '';
+        for (const index in params.attachments) {
+          if (params.attachments[index].type == 'Image') {
+            mediaUrl =
+              'https://4everland.io/ipfs/' +
+              params.attachments[index].uri.replaceAll('ipfs://', '');
+            break;
+          }
+        }
+
         const arweaveId = await uploadToArweave({
-          // todo
+          authors: [
+            {
+              name: params.profileName,
+              percentage: 100
+            }
+          ],
+          description: '',
+          mediaUrl: mediaUrl,
+          origin: 'Hey.xyz',
+          originUrl:
+            (IS_MAINNET ? 'https://hey.xyz/u/' : 'https://testnet.hey.xyz/u/') +
+            params.profileName,
+          tag: [
+            {
+              key: 'content',
+              value: params.content
+            }
+          ]
         });
 
         return {
