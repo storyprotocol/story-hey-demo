@@ -446,6 +446,7 @@ const NewPublication: FC<NewPublicationProps> = ({ publication }) => {
           openActionModules.push({
             unknownOpenAction: await buildOpenAction({
               arweaveId,
+              attachments,
               content: `${processedPublicationContent}`,
               profileName: getProfile(currentProfile).slugWithPrefix,
               title

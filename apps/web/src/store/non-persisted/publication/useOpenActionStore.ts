@@ -1,5 +1,6 @@
 import type { OpenAction } from '@hey/data/enums';
 import type { UnknownOpenActionModuleInput } from '@hey/lens';
+import type { NewAttachment } from '@hey/types/misc';
 
 import { create } from 'zustand';
 
@@ -10,6 +11,7 @@ export enum ScreenType {
 
 interface OpenActionBuildParams {
   arweaveId: string;
+  attachments: Array<NewAttachment>;
   content: string;
   profileName: string;
   title: string;
