@@ -129,7 +129,7 @@ const IntellectualPropertyConfig: FC = () => {
               newPostName,
               newAuthorName,
               licenseType,
-              'https://gateway.irys.xyz/' + arweaveId
+              'https://arweave.net/' + arweaveId
             ]
           )
         };
