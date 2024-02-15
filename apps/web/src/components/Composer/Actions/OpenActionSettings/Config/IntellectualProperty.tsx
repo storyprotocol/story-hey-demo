@@ -143,7 +143,7 @@ const IntellectualPropertyConfig: FC = () => {
     <div>
       <div className="p-5">
         <ToggleWithHelper
-          description="This will register your post as intellectual property on Story Protocol. Youwill be able to set terms of use in a decentralized way."
+          description="This will register your post as intellectual property on Story Protocol. You will be able to set terms of use in a decentralized way."
           heading="Register post as intellectual property"
           on={enabled}
           setOn={() => {
@@ -178,11 +178,11 @@ const IntellectualPropertyConfig: FC = () => {
                   />
                 </div>
               </div>
-              <b>Team of Use</b>
+              <b>Terms of use</b>
               <div className="mt-3 space-y-5">
                 <Radio
                   checked={isCommercialActivity}
-                  description="Retain full control over reuse of your work, while allowing anyone to appropriately use the work in exchange for a fair reward."
+                  description="Retain control over use of your work, while allowing anyone to appropriately use the work for economic terms you set."
                   heading={<b>Commercial Activity</b>}
                   onChange={() => {
                     setIsCommercialActivity(true);
@@ -190,7 +190,7 @@ const IntellectualPropertyConfig: FC = () => {
                 />
                 <Radio
                   checked={!isCommercialActivity}
-                  description="Let the world play with your IP. This license allows for endless remixing while tracking all the uses of your work and giving you full credit."
+                  description="Let the world build on your creation. This license allows for endless free remixing while tracking all the uses of your work and giving you full credit."
                   heading={<b>Social Remixing</b>}
                   onChange={() => {
                     setIsCommercialActivity(false);
