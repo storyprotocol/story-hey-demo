@@ -4,6 +4,7 @@ import type {
 } from '@hey/lens';
 import type { FC } from 'react';
 
+import { STORY_PROTOCOL_EXPLORER_URL } from '@hey/data/constants';
 import { PUBLICATION } from '@hey/data/tracking';
 import { VerifiedOpenActionModules } from '@hey/data/verified-openaction-modules';
 import { isMirrorPublication } from '@hey/lib/publicationHelpers';
@@ -50,6 +51,31 @@ const IntellectualPropertyOpenAction: FC<
   const iconClassName = isFullPublication
     ? 'w-[17px] sm:w-[20px]'
     : 'w-[15px] sm:w-[18px]';
+
+  const mayRule =
+    licenseType == 'SocialRemix'
+      ? [
+          'Remix this work and distribute it freely',
+          'Include this work in your own work',
+          'You must credit the author appropriately'
+        ]
+      : [
+          'Purchase the right to use',
+          'You must credit the creator',
+          'Display or publish on any medium'
+        ];
+  const mayNotRule =
+    licenseType == 'SocialRemix'
+      ? [
+          'Resell the original work',
+          'Commercialize your remix',
+          'Claim credit of your remix as original work'
+        ]
+      : [
+          'Claim this work as your own',
+          'Create remixes based on this work',
+          'Resell this work'
+        ];
 
   return (
     <>
@@ -98,63 +124,29 @@ const IntellectualPropertyOpenAction: FC<
           <div className="mt-1 flex pt-4">
             <div className="flex-1">
               <p className="mb-1 text-xs">You may:</p>
-              <p>
-                <img
-                  alt="Intellectual Property"
-                  className="inline"
-                  src="/assets/open-action/checkgreen.svg"
-                />
-                <span className="pl-2 text-xs">Remix this work freely</span>
-              </p>
-              <p>
-                <img
-                  alt="Intellectual Property"
-                  className="inline size-6"
-                  src="/assets/open-action/checkgreen.svg"
-                />
-                <span className="pl-2 text-xs">
-                  Use this work in your own work
-                </span>
-              </p>
-              <p>
-                <img
-                  alt="Intellectual Property"
-                  className="inline size-6"
-                  src="/assets/open-action/checkgreen.svg"
-                />
-                <span className="pl-2 text-xs">
-                  You must credit the author, {authorName}
-                </span>
-              </p>
+              {mayRule.map((it) => (
+                <p key={it}>
+                  <img
+                    alt="may"
+                    className="inline"
+                    src="/assets/open-action/checkgreen.svg"
+                  />
+                  <span className="pl-2 text-xs">{it}</span>
+                </p>
+              ))}
             </div>
             <div className="flex-1">
               <p className="mb-1 text-xs">You may not:</p>
-              <p>
-                <img
-                  alt="Intellectual Property"
-                  className="inline"
-                  src="/assets/open-action/closered.svg"
-                />
-                <span className="pl-2 text-xs">Resell this work</span>
-              </p>
-              <p>
-                <img
-                  alt="Intellectual Property"
-                  className="inline size-6"
-                  src="/assets/open-action/closered.svg"
-                />
-                <span className="pl-2 text-xs">
-                  Use this work without crediting {authorName}
-                </span>
-              </p>
-              <p>
-                <img
-                  alt="Intellectual Property"
-                  className="inline size-6"
-                  src="/assets/open-action/closered.svg"
-                />
-                <span className="pl-2 text-xs">Use in x, y, z ways</span>
-              </p>
+              {mayNotRule.map((it) => (
+                <p key={it}>
+                  <img
+                    alt="may-not"
+                    className="inline"
+                    src="/assets/open-action/closered.svg"
+                  />
+                  <span className="pl-2 text-xs">{it}</span>
+                </p>
+              ))}
             </div>
           </div>
           <div className="mb-6 mt-6 flex">
@@ -171,7 +163,16 @@ const IntellectualPropertyOpenAction: FC<
               </span>
             </div>
           </div>
-          <Button className="ml-auto block w-full text-[20px]" variant="danger">
+          <Button
+            className="ml-auto block w-full text-[20px]"
+            onClick={() =>
+              window.open(
+                `${STORY_PROTOCOL_EXPLORER_URL}/transactions/${publication.txHash}`,
+                '_blank'
+              )
+            }
+            variant="danger"
+          >
             View on Story Protocol
           </Button>
         </div>

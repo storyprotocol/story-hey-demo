@@ -7,7 +7,8 @@ import {
   ARWEAVE_GATEWAY,
   IPFS_GATEWAY,
   IS_MAINNET,
-  POLYGONSCAN_URL
+  POLYGONSCAN_URL,
+  STORY_PROTOCOL_EXPLORER_URL
 } from '@hey/data/constants';
 import { VerifiedOpenActionModules } from '@hey/data/verified-openaction-modules';
 import { Card } from '@hey/ui';
@@ -120,9 +121,7 @@ const OnchainMeta: FC<OnchainMetaProps> = ({ publication }) => {
           <Meta
             hash={storyProof}
             name="STORY PROTOCOL PROOF"
-            uri={`${POLYGONSCAN_URL}/tx/${publication.txHash
-              ?.split('/')
-              .pop()}`}
+            uri={`${STORY_PROTOCOL_EXPLORER_URL}/transactions/${publication.txHash}`}
           />
         ) : null}
       </div>
