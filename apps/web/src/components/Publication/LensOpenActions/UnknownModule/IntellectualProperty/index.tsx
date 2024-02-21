@@ -9,9 +9,11 @@ import { PUBLICATION } from '@hey/data/tracking';
 import { VerifiedOpenActionModules } from '@hey/data/verified-openaction-modules';
 import { isMirrorPublication } from '@hey/lib/publicationHelpers';
 import { Button, Modal, Tooltip } from '@hey/ui';
+import getStoryProtocolProof from '@lib/getStoryProtocolProof';
 import { Leafwatch } from '@lib/leafwatch';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useEffectOnce } from 'usehooks-ts';
 import { decodeAbiParameters } from 'viem';
 
 interface IntellectualPropertyOpenActionProps {
@@ -22,7 +24,13 @@ interface IntellectualPropertyOpenActionProps {
 const IntellectualPropertyOpenAction: FC<
   IntellectualPropertyOpenActionProps
 > = ({ isFullPublication = false, publication }) => {
+  const [storyProof, setStoryProof] = useState('LOADING');
   const [showOpenActionModal, setShowOpenActionModal] = useState(false);
+
+  useEffectOnce(() => {
+    getStoryProtocolProof(publication.txHash).then((res) => setStoryProof(res));
+  });
+
   const targetPublication = isMirrorPublication(publication)
     ? publication?.mirrorOn
     : publication;
@@ -165,9 +173,10 @@ const IntellectualPropertyOpenAction: FC<
           </div>
           <Button
             className="ml-auto block w-full text-[20px]"
+            disabled={storyProof == 'LOADING'}
             onClick={() =>
               window.open(
-                `${STORY_PROTOCOL_EXPLORER_URL}/transactions/${publication.txHash}`,
+                `${STORY_PROTOCOL_EXPLORER_URL}/view/${storyProof.replaceAll(':', '/')}`,
                 '_blank'
               )
             }
