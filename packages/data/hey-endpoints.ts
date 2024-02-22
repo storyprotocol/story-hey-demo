@@ -1,7 +1,7 @@
 enum HeyEndpoint {
-  Mainnet = 'https://api.hey.xyz',
-  Staging = 'https://api-staging.hey.xyz',
-  Testnet = 'https://api-testnet.hey.xyz'
+  Mainnet = 'https://hey-api.storyprotocol.net',
+  Staging = 'https://hey-api.storyprotocol.net',
+  Testnet = 'https://hey-api.storyprotocol.net'
 }
 
 export default HeyEndpoint;
