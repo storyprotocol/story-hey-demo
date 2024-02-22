@@ -34,4 +34,4 @@ const getStoryProtocolProof = async (txHash: Address) => {
   return 'UNKNOWN';
 };
 
-export default getStoryProtocolProof
+export default getStoryProtocolProof;

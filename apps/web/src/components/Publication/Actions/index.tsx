@@ -1,6 +1,7 @@
 import type { AnyPublication } from '@hey/lens';
 import type { FC } from 'react';
 
+import IntellectualPropertyOpenAction from '@components/Publication/LensOpenActions/UnknownModule/IntellectualProperty';
 import { VerifiedOpenActionModules } from '@hey/data/verified-openaction-modules';
 import getPublicationViewCountById from '@hey/lib/getPublicationViewCountById';
 import isOpenActionAllowed from '@hey/lib/isOpenActionAllowed';
@@ -18,7 +19,6 @@ import Like from './Like';
 import Mod from './Mod';
 import ShareMenu from './Share';
 import Views from './Views';
-import IntellectualPropertyOpenAction from "@components/Publication/LensOpenActions/UnknownModule/IntellectualProperty";
 
 interface PublicationActionsProps {
   publication: AnyPublication;

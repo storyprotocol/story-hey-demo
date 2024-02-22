@@ -46,7 +46,7 @@ const IntellectualPropertyOpenAction: FC<
 
   const openActionSetting = module as UnknownOpenActionModuleSettings;
 
-  const [postName, authorName, licenseType, arweaveId] = decodeAbiParameters(
+  const [postName, authorName, licenseType] = decodeAbiParameters(
     [
       { name: 'postName', type: 'string' },
       { name: 'authorName', type: 'string' },
